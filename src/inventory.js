@@ -6,59 +6,87 @@ export default class Inventory extends Phaser.Scene {
     }
 
     preload() {
-        // Load the inventory background
-        this.load.image("inventory_bg", "assets/inventory_background.png");
-
-        // Preload Pokémon sprites (you can adjust the IDs based on your game)
+        this.load.image("inventory_bg", "assets/inventory_bg.png"); 
+        // Preload Pokémon sprites (generic IDs for illustration)
         for (let i = 1; i <= 6; i++) {
             this.load.image(`pokemon_${i}`, `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`);
         }
     }
 
     create(data) {
-        const { inventoryPokemons } = data; // Destructure the inventoryPokemons data passed to the scene
+        const { inventoryPokemons } = data;
 
-        // Set the inventory background image
-        this.add.image(240, 160, "inventory_bg").setOrigin(0.5);
+        // Background image
+        const background = this.add.image(this.scale.width / 2, this.scale.height, "inventory_bg");
+        background.setOrigin(0.5, 1);
 
-        // Add the inventory title
+        // Title
         this.add.text(240, 20, "Pokémon Inventory", {
-            fontSize: "18px",
-            color: "#ffffff",
+            fontSize: "24px",
+            color: "#000",
             fontStyle: "bold",
+            backgroundColor: "rgba(0, 255, 255, 0.7)",
+            stroke: "#fff",
+            strokeThickness: 2,
+            shadow: { offsetX: 2, offsetY: 2, color: "#000", blur: 3, fill: true }
         }).setOrigin(0.5);
 
-        // Design the layout (up to 6 Pokémon, in two rows)
-        const maxColumns = 3; // Maximum columns per row
-        const offsetX = 120;  // Horizontal spacing
-        const offsetY = 100;  // Vertical spacing
-        const startX = 80;    // Starting X position
-        const startY = 60;    // Starting Y position
+
+        this.add.text(10, 290, "Press ESC to return to the menu", {
+            fontSize: "16px",
+            color: "#FFFFFF",
+            fontFamily: "Arial",
+            fontStyle: "bold",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            padding: { x: 10, y: 5 },
+            align: "center",
+        });
+
+
+        // Menu layout (arranged in two rows)
+        const maxColumns = 3;
+        const offsetX = 140; // Space between columns
+        const offsetY = 120; // Space between rows
+        const startX = 100; // Initial X position
+        const startY = 80; // Initial Y position
 
         inventoryPokemons.forEach((pokemon, index) => {
-            const row = Math.floor(index / maxColumns); // Calculate the row
-            const col = index % maxColumns;            // Calculate the column
+            const row = Math.floor(index / maxColumns); // Current row
+            const col = index % maxColumns; // Current column
 
-            const x = startX + col * offsetX; // X coordinate based on column
-            const y = startY + row * offsetY; // Y coordinate based on row
+            const x = startX + col * offsetX;
+            const y = startY + row * offsetY;
 
-            // Display Pokémon sprite
-            this.add.image(x, y, `pokemon_${pokemon.id}`).setScale(1).setOrigin(0.5);
+            // Pokémon sprite
+            this.add.image(x, y, `pokemon_${pokemon.id}`).setScale(0.6).setOrigin(0.5);
 
-            // Display Pokémon name below the sprite
+            // Pokémon name
             this.add.text(x, y + 50, pokemon.name, {
-                fontSize: "12px",
-                color: "#ffffff",
+                fontSize: "16px",
+                color: "#000",
+                fontStyle: "bold",
+                stroke: "#fff",
+                strokeThickness: 2,
+                shadow: { offsetX: 1, offsetY: 1, color: "#000", blur: 2, fill: true }
             }).setOrigin(0.5);
         });
 
-        // Instruction to exit the inventory and go back to the menu
-        this.add.text(240, 300, "Press ESC to return", {
-            fontSize: "14px",
+        // Instruction to exit
+        this.add.text(400, 550, "Press ESC to return", {
+            fontSize: "18px",
             color: "#ffffff",
         }).setOrigin(0.5);
 
-        // Event to go back to the main menu when ESC is pressed
+
+        this.add.text(400, 550, "Press ESC to return", {
+            fontSize: "18px",
+            color: "#ffffff",
+            stroke: "#000",
+            strokeThickness: 2,
+            shadow: { offsetX: 2, offsetY: 2, color: "#000", blur: 3, fill: true }
+        }).setOrigin(0.5);
+
+        // Event to return to the menu
         this.input.keyboard.on("keydown-ESC", () => {
             this.scene.start("Menu");
         });

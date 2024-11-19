@@ -81,6 +81,18 @@ export default class Menu extends Phaser.Scene {
 
     }
 
+
+    this.add.text(0, 0, "Press X to view your pokemon inventory", {
+      fontSize: "16px",
+      color: "#FFFFFF",
+      fontFamily: "Arial",
+      fontStyle: "bold",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      padding: { x: 10, y: 5 },
+      align: "center",
+    });
+
+
     // Add blinking text
     const blinkingText = this.add.text(40, 180, "Enter the door to start the game!", {
       fontSize: "24px",

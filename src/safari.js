@@ -316,6 +316,7 @@ export default class Safari extends Phaser.Scene {
 
             // Delay for 5 seconds before redirecting to the menu
             this.time.delayedCall(5000, () => {
+                this.safari.stop();
                 capturedText.destroy(); // Remove the message
                 this.scene.start("Menu", { capturedPokemon: this.pokemonCaptured }); // Redirect to the menu
             });

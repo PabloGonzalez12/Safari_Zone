@@ -17,8 +17,8 @@ const config = {
       debug: true,
     },
   },
-  // Asegúrate de incluir ambas escenas aquí
   scene: [Menu, Change, Safari, Inventory],
 };
+
 
 export default new Phaser.Game(config);
